@@ -4,6 +4,7 @@ import random
 import pylab
 
 time = 0
+POPULATION_SIZE = 10
 P_OF_MUTATION = 0.20
 P_OF_CROSSOVER = 0.15
 
@@ -71,7 +72,7 @@ def mutate(chromosome):
     return chromosome
 
 
-POPULATION_SIZE = 10
+
 population = initializePopulation(POPULATION_SIZE)
 chromosomes, fitness_list = get_fitness_list(population)
 
