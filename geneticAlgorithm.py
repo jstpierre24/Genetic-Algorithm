@@ -92,11 +92,11 @@ for i in range(time, 500):
     time += 1
 
 
-# X = range(1023)
-# Y = []
-# for i in range(1023):
-#     Y.append(fitness(i))
-#
-#
-# pylab.plot(X, Y)
-# pylab.show()
+X = range(1023)
+Y = []
+for i in range(1023):
+    Y.append(fitness(i))
+
+
+pylab.plot(X, Y)
+pylab.show()
