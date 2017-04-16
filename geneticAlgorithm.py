@@ -17,7 +17,7 @@ def initializePopulation(size):
         chromosome = []
         for i in range(10):
             gene = random.randint(0, 1)
-            chromosomee.append(gene)
+            chromosome.append(gene)
         population.append(chromosome)
     return population
 
