@@ -79,7 +79,7 @@ chromosomes, fitness_list = get_fitness_list(population)
 for i in range(time, 500):
 
     print "generation: " + str(time), "Max chromosome: " + str(chromosomes[0]), "X: " + str(
-        bin2dec(chromosomes[0])), "MAX: " + str(fitness_list[0])
+        bin2dec(chromosomes[0])), "MAX: " + str(int(fitness_list[0]))
     for index in range(len(chromosomes)):
         # If probability of crossover between two neighbors
         # perform a crossover with possible mutation as well
