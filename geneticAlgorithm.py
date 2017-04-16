@@ -14,11 +14,11 @@ P_OF_CROSSOVER = 0.15
 def initializePopulation(size):
     population = []
     for i in range(size):
-        chromasone = []
+        chromosome = []
         for i in range(10):
             gene = random.randint(0, 1)
-            chromasone.append(gene)
-        population.append(chromasone)
+            chromosomee.append(gene)
+        population.append(chromosome)
     return population
 
 
