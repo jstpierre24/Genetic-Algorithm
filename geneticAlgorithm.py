@@ -1,12 +1,16 @@
 from __future__ import division
 import math
 import random
-import pylab
+import matplotlib.pyplot as plt
 
 time = 0
 POPULATION_SIZE = 10
 P_OF_MUTATION = 0.20
 P_OF_CROSSOVER = 0.15
+
+avg_fitness = []
+
+
 
 
 # Randomize the initial population
@@ -72,9 +76,29 @@ def mutate(chromosome):
     return chromosome
 
 
+# For base function graphing
+X = range(1023)
+Y = []
+for i in range(1023):
+    Y.append(fitness(i))
 
 population = initializePopulation(POPULATION_SIZE)
 chromosomes, fitness_list = get_fitness_list(population)
+
+plt.ion()
+f, ax = plt.subplots(1)
+ax.plot(X, Y, color="k")
+
+total = 1
+for chromosome in chromosomes:
+    total += bin2dec(chromosome)
+avg = total/POPULATION_SIZE
+
+ax.plot(int(avg), fitness(int(avg)), marker='o', color="b", label="avg")
+ax.plot(bin2dec(chromosomes[0]), fitness(bin2dec(chromosomes[0])), marker='o', color="g", label="best")
+ax.plot(bin2dec(chromosomes[9]), fitness(bin2dec(chromosomes[9])), marker='o', color="r", label="worst")
+ax.legend()
+
 
 for i in range(time, 500):
 
@@ -83,20 +107,17 @@ for i in range(time, 500):
     for index in range(len(chromosomes)):
         # If probability of crossover between two neighbors
         # perform a crossover with possible mutation as well
-        if (random.random() < P_OF_CROSSOVER):
+        if random.random() < P_OF_CROSSOVER:
             child = crossover(chromosomes[index], chromosomes[(index + 1) % 10])
             child = mutate(child)
             chromosomes[9] = child
             chromosomes, fitness_list = get_fitness_list(chromosomes)
-
     time += 1
 
+    ax.plot(bin2dec(chromosomes[0]), fitness(bin2dec(chromosomes[0])), marker='o', color="g", label="best")
+    ax.plot(bin2dec(chromosomes[9]), fitness(bin2dec(chromosomes[9])), marker='o', color="r", label="worst")
 
-X = range(1023)
-Y = []
-for i in range(1023):
-    Y.append(fitness(i))
+    plt.pause(0.02)
 
 
-pylab.plot(X, Y)
-pylab.show()
+
