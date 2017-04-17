@@ -7,7 +7,7 @@ start = timeit.default_timer()
 import matplotlib.pyplot as plt
 
 time = 0
-POPULATION_SIZE = 10
+POPULATION_SIZE = 40
 P_OF_MUTATION = 0.20
 P_OF_CROSSOVER = 0.15
 avg_fitness = []
@@ -56,7 +56,7 @@ def get_fitness_list(chromosomes):
 # Function that creates a child with a
 # crossover between 2 parents
 def crossover(p1, p2):
-    child = p1[0:3] + p2[3:10]
+    child = p1[0:2] + p2[2:10]
     return child
 
 
@@ -97,7 +97,7 @@ ax.plot(bin2dec(chromosomes[9]), fitness(bin2dec(chromosomes[9])), marker='o', c
 ax.legend()
 
 
-for i in range(time, 10):
+for i in range(time, 500):
     print "generation: " + str(time), "Max chromosome: " + str(chromosomes[0]), "X: " + str(
         bin2dec(chromosomes[0])), "MAX: " + str(int(fitness_list[0]))
     for index in range(len(chromosomes)):
@@ -111,7 +111,7 @@ for i in range(time, 10):
     time += 1
     ax.plot(bin2dec(chromosomes[0]), fitness(bin2dec(chromosomes[0])), marker='o', color="g", label="best")
     ax.plot(bin2dec(chromosomes[9]), fitness(bin2dec(chromosomes[9])), marker='o', color="r", label="worst")
-    plt.pause(0.02)
+    # plt.pause(0.02)
 stop = timeit.default_timer()
 print ("--- %.7s seconds ---" % (stop - start))
 plt.show(block=True)
