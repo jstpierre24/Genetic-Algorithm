@@ -84,6 +84,7 @@ for i in range(1023):
 population = initializePopulation(POPULATION_SIZE)
 chromosomes, fitness_list = get_fitness_list(population)
 plt.ion()
+
 f, ax = plt.subplots(1)
 ax.plot(X, Y, color="k")
 total = 1
@@ -94,7 +95,9 @@ ax.plot(int(avg), fitness(int(avg)), marker='o', color="b", label="avg")
 ax.plot(bin2dec(chromosomes[0]), fitness(bin2dec(chromosomes[0])), marker='o', color="g", label="best")
 ax.plot(bin2dec(chromosomes[9]), fitness(bin2dec(chromosomes[9])), marker='o', color="r", label="worst")
 ax.legend()
-for i in range(time, 500):
+
+
+for i in range(time, 10):
     print "generation: " + str(time), "Max chromosome: " + str(chromosomes[0]), "X: " + str(
         bin2dec(chromosomes[0])), "MAX: " + str(int(fitness_list[0]))
     for index in range(len(chromosomes)):
@@ -111,3 +114,4 @@ for i in range(time, 500):
     plt.pause(0.02)
 stop = timeit.default_timer()
 print ("--- %.7s seconds ---" % (stop - start))
+plt.show(block=True)
