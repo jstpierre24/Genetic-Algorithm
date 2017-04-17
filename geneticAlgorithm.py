@@ -2,6 +2,9 @@ from __future__ import division
 import math
 import random
 import pylab
+import timeit
+
+start = timeit.default_timer()
 
 time = 0
 POPULATION_SIZE = 10
@@ -97,6 +100,8 @@ Y = []
 for i in range(1023):
     Y.append(fitness(i))
 
+stop = timeit.default_timer()
+print ("--- %s seconds ---" % (stop - start))
 
 pylab.plot(X, Y)
 pylab.show()
