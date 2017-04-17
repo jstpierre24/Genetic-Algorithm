@@ -1,16 +1,16 @@
 from __future__ import division
 import math
 import random
+import timeit
+
+start = timeit.default_timer()
 import matplotlib.pyplot as plt
 
 time = 0
 POPULATION_SIZE = 10
 P_OF_MUTATION = 0.20
 P_OF_CROSSOVER = 0.15
-
 avg_fitness = []
-
-
 
 
 # Randomize the initial population
@@ -81,27 +81,20 @@ X = range(1023)
 Y = []
 for i in range(1023):
     Y.append(fitness(i))
-
 population = initializePopulation(POPULATION_SIZE)
 chromosomes, fitness_list = get_fitness_list(population)
-
 plt.ion()
 f, ax = plt.subplots(1)
 ax.plot(X, Y, color="k")
-
 total = 1
 for chromosome in chromosomes:
     total += bin2dec(chromosome)
-avg = total/POPULATION_SIZE
-
+avg = total / POPULATION_SIZE
 ax.plot(int(avg), fitness(int(avg)), marker='o', color="b", label="avg")
 ax.plot(bin2dec(chromosomes[0]), fitness(bin2dec(chromosomes[0])), marker='o', color="g", label="best")
 ax.plot(bin2dec(chromosomes[9]), fitness(bin2dec(chromosomes[9])), marker='o', color="r", label="worst")
 ax.legend()
-
-
 for i in range(time, 500):
-
     print "generation: " + str(time), "Max chromosome: " + str(chromosomes[0]), "X: " + str(
         bin2dec(chromosomes[0])), "MAX: " + str(int(fitness_list[0]))
     for index in range(len(chromosomes)):
@@ -113,11 +106,8 @@ for i in range(time, 500):
             chromosomes[9] = child
             chromosomes, fitness_list = get_fitness_list(chromosomes)
     time += 1
-
     ax.plot(bin2dec(chromosomes[0]), fitness(bin2dec(chromosomes[0])), marker='o', color="g", label="best")
     ax.plot(bin2dec(chromosomes[9]), fitness(bin2dec(chromosomes[9])), marker='o', color="r", label="worst")
-
     plt.pause(0.02)
-
-
-
+stop = timeit.default_timer()
+print ("--- %s seconds ---" % (stop - start))
