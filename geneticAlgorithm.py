@@ -110,4 +110,4 @@ for i in range(time, 500):
     ax.plot(bin2dec(chromosomes[9]), fitness(bin2dec(chromosomes[9])), marker='o', color="r", label="worst")
     plt.pause(0.02)
 stop = timeit.default_timer()
-print ("--- %s seconds ---" % (stop - start))
+print ("--- %.7s seconds ---" % (stop - start))
