@@ -2,6 +2,7 @@ from __future__ import division
 import math
 import random
 import timeit
+
 start = timeit.default_timer()
 import matplotlib.pyplot as plt
 
@@ -10,6 +11,8 @@ POPULATION_SIZE = 10
 P_OF_MUTATION = 0.20
 P_OF_CROSSOVER = 0.15
 avg_fitness = []
+
+
 # Randomize the initial population
 # with random chromosomes
 def initializePopulation(size):
@@ -21,6 +24,8 @@ def initializePopulation(size):
             chromosome.append(gene)
         population.append(chromosome)
     return population
+
+
 # Convert binary value to decimal
 # Used to create the chromosomes
 # of decimal values
@@ -29,11 +34,15 @@ def bin2dec(binary):
     for j in binary:
         y = str(y) + str(j)
     return int(y, 2)
+
+
 # Calculate the Y value for fitness evaluation on
 # the function to be optimized
 def fitness(x):
     y = (-1 / 10000) * x * (x - 1023) + 5 * math.sin(x / 8) * math.cos(x / 19)
     return y
+
+
 # Get fitness values and return chromosome list
 # based on highest fitness value
 def get_fitness_list(chromosomes):
@@ -42,11 +51,15 @@ def get_fitness_list(chromosomes):
         chrom_fitness = fitness(bin2dec(chromosome))
         fitness_list.append(chrom_fitness)
     return [x for (y, x) in sorted(zip(fitness_list, chromosomes), reverse=1)], sorted(fitness_list, reverse=1)
+
+
 # Function that creates a child with a
 # crossover between 2 parents
 def crossover(p1, p2):
     child = p1[0:3] + p2[3:10]
     return child
+
+
 # Function to toggle a gene during mutation
 def toggle(gene):
     if gene == 1:
@@ -54,11 +67,15 @@ def toggle(gene):
     elif gene == 0:
         gene = 1
     return gene
+
+
 def mutate(chromosome):
     for index in range(len(chromosome)):
         if (random.random() < P_OF_MUTATION):
             chromosome[index] = toggle(chromosome[index])
     return chromosome
+
+
 # For base function graphing
 X = range(1023)
 Y = []
@@ -72,7 +89,7 @@ ax.plot(X, Y, color="k")
 total = 1
 for chromosome in chromosomes:
     total += bin2dec(chromosome)
-avg = total/POPULATION_SIZE
+avg = total / POPULATION_SIZE
 ax.plot(int(avg), fitness(int(avg)), marker='o', color="b", label="avg")
 ax.plot(bin2dec(chromosomes[0]), fitness(bin2dec(chromosomes[0])), marker='o', color="g", label="best")
 ax.plot(bin2dec(chromosomes[9]), fitness(bin2dec(chromosomes[9])), marker='o', color="r", label="worst")
