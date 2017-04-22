@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 
 time = 0
 POPULATION_SIZE = 40
-P_OF_MUTATION = 0.20
-P_OF_CROSSOVER = 0.15
+P_OF_MUTATION = 0.25
+P_OF_CROSSOVER = 0.25
 avg_fitness = []
 
 
@@ -56,7 +56,7 @@ def get_fitness_list(chromosomes):
 # Function that creates a child with a
 # crossover between 2 parents
 def crossover(p1, p2):
-    child = p1[0:2] + p2[2:10]
+    child = p1[0:3] + p2[3:10]
     return child
 
 
@@ -91,27 +91,41 @@ total = 1
 for chromosome in chromosomes:
     total += bin2dec(chromosome)
 avg = total / POPULATION_SIZE
+
 ax.plot(int(avg), fitness(int(avg)), marker='o', color="b", label="avg")
 ax.plot(bin2dec(chromosomes[0]), fitness(bin2dec(chromosomes[0])), marker='o', color="g", label="best")
 ax.plot(bin2dec(chromosomes[9]), fitness(bin2dec(chromosomes[9])), marker='o', color="r", label="worst")
 ax.legend()
 
 
-for i in range(time, 500):
-    print "generation: " + str(time), "Max chromosome: " + str(chromosomes[0]), "X: " + str(
-        bin2dec(chromosomes[0])), "MAX: " + str(int(fitness_list[0]))
-    for index in range(len(chromosomes)):
-        # If probability of crossover between two neighbors
-        # perform a crossover with possible mutation as well
+for i in range(time, 5000):
+    print "generation: " + str(time), "Max chromosome: " + str(chromosomes[0]), "X: " + str(bin2dec(chromosomes[0])), "MAX: " + str(int(fitness_list[0]))
+
+    if int(fitness_list[0]) == 31:
+        break
+
+    chromosomes = chromosomes[0:int(POPULATION_SIZE/2)]
+
+    while(len(chromosomes)<POPULATION_SIZE):
         if random.random() < P_OF_CROSSOVER:
-            child = crossover(chromosomes[index], chromosomes[(index + 1) % 10])
-            child = mutate(child)
-            chromosomes[9] = child
-            chromosomes, fitness_list = get_fitness_list(chromosomes)
+            parents = random.sample(xrange(0, len(chromosomes)-1), 2)
+            parent1 = parents[0]
+            parent2 = parents[1]
+            child = crossover(chromosomes[parent1], chromosomes[parent2])
+
+            if random.random() < P_OF_MUTATION:
+                child = mutate(child)
+            chromosomes.append(child)
+
+
+    chromosomes, fitness_list = get_fitness_list(chromosomes)
+
+
+
     time += 1
     ax.plot(bin2dec(chromosomes[0]), fitness(bin2dec(chromosomes[0])), marker='o', color="g", label="best")
     ax.plot(bin2dec(chromosomes[9]), fitness(bin2dec(chromosomes[9])), marker='o', color="r", label="worst")
-    # plt.pause(0.02)
+    # plt.pause(0.01)
 stop = timeit.default_timer()
 print ("--- %.7s seconds ---" % (stop - start))
 plt.show(block=True)
